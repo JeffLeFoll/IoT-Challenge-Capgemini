@@ -1,0 +1,55 @@
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    versionGuice = "4.0"
+    versionSelma = "0.14"
+}
+
+dependencies {
+    compile "com.google.guava:guava:19.0"
+    compile "com.google.inject.extensions:guice-multibindings:$versionGuice"
+    compile "com.google.inject:guice:$versionGuice"
+    compile "net.code-story:http:2.104"
+    compile "org.reflections:reflections:0.9.10"
+    compile "fr.xebia.extras:selma-processor:$versionSelma"
+    compile "fr.xebia.extras:selma:$versionSelma"
+
+    compile "ch.qos.logback:logback-classic:1.1.6"
+    compile "org.slf4j:slf4j-api:1.7.18"
+
+    compile 'org.mongodb:mongo-java-driver:3.2.2'
+    compile 'org.jongo:jongo:1.3.0'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.6'
+
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.assertj:assertj-core:3.3.0'
+    testCompile 'org.mockito:mockito-core:2.0.43-beta'
+
+}
+
+tasks.withType(JavaCompile) { 
+	options.encoding = "UTF-8" 
+}
+
+task copyToDep(type: Copy) {
+    into "$buildDir/dep"
+    from configurations.compile
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.11'
+}
+
+task stage(dependsOn: ["build", "copyToDep"])
