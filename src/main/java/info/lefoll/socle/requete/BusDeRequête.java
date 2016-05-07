@@ -8,16 +8,16 @@ import javax.inject.Inject;
 import java.util.Map;
 import java.util.Set;
 
-public class BusDeRequête{
+public class BusDeRequête {
 
     @Inject
-    public BusDeRequête(Set<ManipulateurDeRequête> ensembleDesManipulateurs){
+    public BusDeRequête(Set<ManipulateurDeRequête> ensembleDesManipulateurs) {
 
         ensembleDesManipulateurs.forEach(manipulateur
                 -> catalogueDeRequêtes.put(manipulateur.getTypeRequête(), manipulateur));
     }
 
-    public Object traiterRequête(Requête requête){
+    public Object traiterRequête(Requête requête) {
         ManipulateurDeRequête manipulateur = catalogueDeRequêtes.get(requête.getClass());
 
         return manipulateur.exécuter(requête);

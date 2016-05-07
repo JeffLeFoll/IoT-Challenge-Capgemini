@@ -17,7 +17,7 @@ public class OpérateurAgrégationMongoDBTest {
     }
 
     @Test
-    public void doitPouvoirAjouterUneValeur(){
+    public void doitPouvoirAjouterUneValeur() {
         String valeur = "sender:1";
 
         opérateurAgrégation.ajouterLesParamètres(valeur);
@@ -26,7 +26,7 @@ public class OpérateurAgrégationMongoDBTest {
     }
 
     @Test
-    public void doitFormaterUnOpérateurAgrégationSimple(){
+    public void doitFormaterUnOpérateurAgrégationSimple() {
         opérateurAgrégation.setTypeEtape("$match");
         opérateurAgrégation.ajouterExpressionEtape("tags: 'read'");
 
@@ -36,7 +36,7 @@ public class OpérateurAgrégationMongoDBTest {
     }
 
     @Test
-    public void peutConstruireUnOpérateurAgrégationAvecAccumulateurCorrectementFormaté(){
+    public void peutConstruireUnOpérateurAgrégationAvecAccumulateurCorrectementFormaté() {
 
         OpérateurAgrégation opérateurAgrégationComplexe = new ConstructeurDOpérateur()
                 .avecLeTypeEtape("$group")
@@ -51,7 +51,7 @@ public class OpérateurAgrégationMongoDBTest {
     }
 
     @Test
-    public void peutConstruireUneAgrégationVide(){
+    public void peutConstruireUneAgrégationVide() {
         OpérateurAgrégation opérateurAgrégation = new OpérateurAgrégation();
 
         String étape = opérateurAgrégation.getEtape();

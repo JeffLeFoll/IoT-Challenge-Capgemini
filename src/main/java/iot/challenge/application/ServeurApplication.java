@@ -4,7 +4,7 @@ import info.lefoll.socle.web.Serveur;
 import iot.challenge.application.resources.Messages;
 import net.codestory.http.routes.Routes;
 
-public class ServeurApplication extends Serveur{
+public class ServeurApplication extends Serveur {
 
     public static void main(String[] args) {
         new ServeurApplication().démarrer();
@@ -16,7 +16,7 @@ public class ServeurApplication extends Serveur{
         routes.add(Messages.class);
     }
 
-    private ServeurApplication(){
+    private ServeurApplication() {
         super();
     }
 

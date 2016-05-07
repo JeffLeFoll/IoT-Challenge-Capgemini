@@ -14,11 +14,11 @@ public class ConnecteurMongoAvecJongo implements Connecteur {
 
     @Inject
     public ConnecteurMongoAvecJongo(Jongo jongo) {
-        this.jongo=jongo;
+        this.jongo = jongo;
     }
 
     @Override
-    public <T> void pourLEntité(Class<T> typeDeLEntité){
+    public <T> void pourLEntité(Class<T> typeDeLEntité) {
         this.typeDeLEntité = typeDeLEntité;
     }
 
@@ -43,7 +43,7 @@ public class ConnecteurMongoAvecJongo implements Connecteur {
         return Optional.ofNullable(résultatAgrégation);
     }
 
-    private MongoCollection collectionMongo(){
+    private MongoCollection collectionMongo() {
         return jongo.getCollection(typeDeLEntité.getSimpleName());
     }
 

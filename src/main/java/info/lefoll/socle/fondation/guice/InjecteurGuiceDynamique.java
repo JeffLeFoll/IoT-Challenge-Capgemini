@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class InjecteurGuiceDynamique {
 
-    public static <T> void listerEtBinderLesTypes(Binder binder, Class<T> typeABinder, String nomDePackage){
+    public static <T> void listerEtBinderLesTypes(Binder binder, Class<T> typeABinder, String nomDePackage) {
 
         Multibinder<T> guiceMultibinder = Multibinder.newSetBinder(binder, typeABinder);
 

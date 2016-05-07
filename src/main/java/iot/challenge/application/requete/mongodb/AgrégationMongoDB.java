@@ -23,5 +23,5 @@ public class AgrégationMongoDB implements Agrégation {
     }
 
     private Optional<OpérateurAgrégation> match = Optional.empty();
-    private Optional<OpérateurAgrégation> group= Optional.empty();
+    private Optional<OpérateurAgrégation> group = Optional.empty();
 }

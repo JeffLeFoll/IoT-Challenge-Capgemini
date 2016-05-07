@@ -18,7 +18,7 @@ import static org.jongo.marshall.jackson.JacksonMapper.Builder;
 
 public class ConfigurationMongoDb {
 
-    public Jongo clientJongo(){
+    public Jongo clientJongo() {
 
         Mapper mapperJackson = new Builder().registerModule(new JavaTimeModule()).build();
 
@@ -39,7 +39,7 @@ public class ConfigurationMongoDb {
         return new MongoClient(Lists.newArrayList(serveurMongo()), infosDeIdentifications);
     }
 
-    private ServerAddress serveurMongo(){
+    private ServerAddress serveurMongo() {
         return new ServerAddress(host, port);
     }
 

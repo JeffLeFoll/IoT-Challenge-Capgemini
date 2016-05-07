@@ -18,7 +18,7 @@ public class ConstructeurDOpérateur {
         return this;
     }
 
-    public ConstructeurDOpérateur avecLesParamètres(Object... paramètres){
+    public ConstructeurDOpérateur avecLesParamètres(Object... paramètres) {
         opérateurAgrégation.ajouterLesParamètres(paramètres);
 
         return this;
@@ -30,7 +30,7 @@ public class ConstructeurDOpérateur {
         return this;
     }
 
-    public OpérateurAgrégation construire(){
+    public OpérateurAgrégation construire() {
         return opérateurAgrégation;
     }
 

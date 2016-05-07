@@ -12,13 +12,13 @@ import javax.inject.Named;
 
 public class ConfigurationCassandra {
 
-    public Session sessionCassandra(){
+    public Session sessionCassandra() {
         Cluster cluster = fabriquerClusterCassndra();
 
         return cluster.connect();
     }
 
-    private Cluster fabriquerClusterCassndra(){
+    private Cluster fabriquerClusterCassndra() {
 
         Cluster cluster = Cluster.builder()
                 .withClusterName(nom)
@@ -40,7 +40,7 @@ public class ConfigurationCassandra {
 
     private AuthProvider fabriquerAuthProvider() {
 
-        if(avecAuthentificationBDD()){
+        if (avecAuthentificationBDD()) {
             return new PlainTextAuthProvider(utilisateur, motDePasse);
         }
         return AuthProvider.NONE;

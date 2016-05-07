@@ -12,15 +12,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConstructeurDOpérateurTest {
 
     @Test
-    public void peutConstruireUnOpérateurAgrégationVide(){
-        
+    public void peutConstruireUnOpérateurAgrégationVide() {
+
         OpérateurAgrégation opérateurAgrégation = new ConstructeurDOpérateur().construire();
 
         assertThat(opérateurAgrégation.getEtape()).isEqualTo("");
     }
 
     @Test
-    public void peutConstruireUnOpérateurAgrégationSimple(){
+    public void peutConstruireUnOpérateurAgrégationSimple() {
         Instant dateDebut = Instant.now().minus(1l, ChronoUnit.HOURS);
         Instant dateFin = Instant.now();
 
@@ -35,7 +35,7 @@ public class ConstructeurDOpérateurTest {
     }
 
     @Test
-    public void peutConstruireUnOpérateurAgrégationAvecAccumulateurCorrectementFormaté(){
+    public void peutConstruireUnOpérateurAgrégationAvecAccumulateurCorrectementFormaté() {
 
         OpérateurAgrégation opérateurAgrégationComplexe = new ConstructeurDOpérateur()
                 .avecLeTypeEtape("$group")

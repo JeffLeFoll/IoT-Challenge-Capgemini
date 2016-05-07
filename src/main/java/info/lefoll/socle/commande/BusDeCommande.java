@@ -11,7 +11,7 @@ import java.util.Set;
 public class BusDeCommande {
 
     @Inject
-    public BusDeCommande(Set<ManipulateurDeCommande> ensembleDesManipulateurs){
+    public BusDeCommande(Set<ManipulateurDeCommande> ensembleDesManipulateurs) {
 
         ensembleDesManipulateurs.forEach(manipulateur
                 -> catalogueDeCommandes.put(manipulateur.getTypeCommande(), manipulateur));

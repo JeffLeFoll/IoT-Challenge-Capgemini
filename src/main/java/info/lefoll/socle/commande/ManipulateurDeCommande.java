@@ -6,8 +6,9 @@ public interface ManipulateurDeCommande<TypeCommande extends Commande> {
 
     void exécuter(TypeCommande commande);
 
-    default Class<TypeCommande> getTypeCommande(){
-        TypeToken<TypeCommande> type =  new TypeToken<TypeCommande>(getClass()){};
+    default Class<TypeCommande> getTypeCommande() {
+        TypeToken<TypeCommande> type = new TypeToken<TypeCommande>(getClass()) {
+        };
 
         return (Class<TypeCommande>) type.getRawType();
     }

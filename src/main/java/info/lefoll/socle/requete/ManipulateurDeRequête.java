@@ -6,8 +6,9 @@ public interface ManipulateurDeRequête<TypeRequête extends Requête, TypeRépo
 
     TypeRéponse exécuter(TypeRequête requête);
 
-    default Class<TypeRequête> getTypeRequête(){
-        TypeToken<TypeRequête> type =  new TypeToken<TypeRequête>(getClass()){};
+    default Class<TypeRequête> getTypeRequête() {
+        TypeToken<TypeRequête> type = new TypeToken<TypeRequête>(getClass()) {
+        };
 
         return (Class<TypeRequête>) type.getRawType();
     }
