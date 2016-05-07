@@ -1,7 +1,10 @@
 package iot.challenge.application.persistance.cassandra;
 
 
-import com.datastax.driver.core.*;
+import com.datastax.driver.core.BoundStatement;
+import com.datastax.driver.core.PreparedStatement;
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 import info.lefoll.socle.persistance.Connecteur;
@@ -13,13 +16,13 @@ import java.util.Optional;
 public class ConnecteurCassandra implements Connecteur {
 
     @Inject
-    public ConnecteurCassandra(Session session, MappingManager mappingManager){
+    public ConnecteurCassandra(Session session, MappingManager mappingManager) {
         this.session = session;
         this.mappingManager = mappingManager;
     }
 
     @Override
-    public <T> void pourLEntité(Class<T> typeDeLEntité){
+    public <T> void pourLEntité(Class<T> typeDeLEntité) {
         this.typeDeLEntité = typeDeLEntité;
     }
 
@@ -48,7 +51,7 @@ public class ConnecteurCassandra implements Connecteur {
         return Optional.ofNullable(résultat);
     }
 
-    private <T> Mapper<T> mapperDeDonnée(){
+    private <T> Mapper<T> mapperDeDonnée() {
         return mappingManager.mapper((Class<T>) typeDeLEntité);
     }
 

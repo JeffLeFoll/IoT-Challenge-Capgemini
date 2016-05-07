@@ -1,17 +1,17 @@
 package iot.challenge.application.commande;
 
-import iot.challenge.application.modele.Message;
 import info.lefoll.socle.commande.Commande;
+import iot.challenge.application.modele.MessageReçut;
 
 public class EnregistrerMessage implements Commande {
 
-    public EnregistrerMessage(Message message) {
-        this.message=message;
+    public EnregistrerMessage(MessageReçut message) {
+        this.message = message;
     }
 
-    public Message getMessage() {
+    public MessageReçut getMessage() {
         return message;
     }
 
-    private Message message;
+    private MessageReçut message;
 }

@@ -1,4 +1,4 @@
-package iot.challenge.application.modele;
+package iot.challenge.application.modele.swagger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

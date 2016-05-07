@@ -35,6 +35,8 @@ dependencies {
     compile 'com.datastax.cassandra:cassandra-driver-mapping:3.0.1'
     compile 'com.datastax.cassandra:cassandra-driver-extras:3.0.1'
 
+    compile 'com.couchbase.client:java-client:2.2.6'
+
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.6'
 
 
@@ -44,8 +46,8 @@ dependencies {
 
 }
 
-tasks.withType(JavaCompile) { 
-	options.encoding = "UTF-8" 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }
 
 task copyToDep(type: Copy) {

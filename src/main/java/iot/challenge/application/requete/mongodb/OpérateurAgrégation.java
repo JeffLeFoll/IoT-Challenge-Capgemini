@@ -3,7 +3,6 @@ package iot.challenge.application.requete.mongodb;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +34,7 @@ public class OpérateurAgrégation {
         expressionsEtAccumulateurs.append(formaterExpressionsEtape());
         expressionsEtAccumulateurs.append(formaterAccumulateurs());
 
-        if(Strings.isNullOrEmpty(expressionsEtAccumulateurs.toString())) {
+        if (Strings.isNullOrEmpty(expressionsEtAccumulateurs.toString())) {
             return "";
         }
 
@@ -49,7 +48,7 @@ public class OpérateurAgrégation {
     private String formaterExpressionsEtape() {
         StringBuilder builderExpressions = new StringBuilder("");
 
-        if(!expressionsEtape.isEmpty()) {
+        if (!expressionsEtape.isEmpty()) {
             expressionsEtape.forEach(expression -> builderExpressions.append(expression).append(", "));
 
             builderExpressions.delete(builderExpressions.length() - 2, builderExpressions.length());

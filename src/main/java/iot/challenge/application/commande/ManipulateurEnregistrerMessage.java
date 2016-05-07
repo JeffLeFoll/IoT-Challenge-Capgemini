@@ -1,7 +1,7 @@
 package iot.challenge.application.commande;
 
-import iot.challenge.application.depot.DépôtDeMessages;
 import info.lefoll.socle.commande.ManipulateurDeCommande;
+import iot.challenge.application.depot.DépôtDeMessages;
 
 import javax.inject.Inject;
 

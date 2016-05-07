@@ -1,7 +1,4 @@
-package iot.challenge.application.modele;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.jongo.marshall.jackson.oid.MongoId;
+package iot.challenge.application.modele.swagger;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -9,7 +6,6 @@ import java.util.Objects;
 
 public class Message {
 
-    @MongoId
     private String id = null;
     private Instant timestamp = null;
     private Integer sensorType = null;

@@ -9,12 +9,12 @@ import com.google.inject.Provides;
 import com.google.inject.name.Names;
 import info.lefoll.socle.commande.BusDeCommande;
 import info.lefoll.socle.commande.ManipulateurDeCommande;
-import iot.challenge.application.persistance.cassandra.ConfigurationCassandra;
-import iot.challenge.application.persistance.mongo.ConfigurationMongoDb;
 import info.lefoll.socle.depot.Dépôt;
 import info.lefoll.socle.fondation.guice.InjecteurGuiceDynamique;
 import info.lefoll.socle.requete.BusDeRequête;
 import info.lefoll.socle.requete.ManipulateurDeRequête;
+import iot.challenge.application.persistance.cassandra.ConfigurationCassandra;
+import iot.challenge.application.persistance.mongo.ConfigurationMongoDb;
 import org.jongo.Jongo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,25 +55,25 @@ public class ApplicationModule extends AbstractModule {
         return properties;
     }
 
-    private void configurerPersistance(){
-        InjecteurGuiceDynamique.listerEtBinderLesTypes(binder(),ManipulateurDeCommande.class, "iot.challenge.application.persistance");
+    private void configurerPersistance() {
+        InjecteurGuiceDynamique.listerEtBinderLesTypes(binder(), ManipulateurDeCommande.class, "iot.challenge.application.persistance");
     }
 
     private void configurerCommandes() {
 
-        InjecteurGuiceDynamique.listerEtBinderLesTypes(binder(),ManipulateurDeCommande.class, "iot.challenge.application.commande");
+        InjecteurGuiceDynamique.listerEtBinderLesTypes(binder(), ManipulateurDeCommande.class, "iot.challenge.application.commande");
         bind(BusDeCommande.class).asEagerSingleton();
     }
 
     private void configurerRequêtes() {
 
-        InjecteurGuiceDynamique.listerEtBinderLesTypes(binder(),ManipulateurDeRequête.class, "iot.challenge.application.requete");
+        InjecteurGuiceDynamique.listerEtBinderLesTypes(binder(), ManipulateurDeRequête.class, "iot.challenge.application.requete");
         bind(BusDeRequête.class).asEagerSingleton();
     }
 
-    private void configurerDépôt(){
+    private void configurerDépôt() {
 
-        InjecteurGuiceDynamique.listerEtBinderLesTypes(binder(),Dépôt.class, "iot.challenge.application.depot");
+        InjecteurGuiceDynamique.listerEtBinderLesTypes(binder(), Dépôt.class, "iot.challenge.application.depot");
     }
 
     @Provides
@@ -92,7 +92,7 @@ public class ApplicationModule extends AbstractModule {
 
     @Provides
     @Singleton
-    public MappingManager mappingManagerCassandra(Session session){
+    public MappingManager mappingManagerCassandra(Session session) {
 
         return new MappingManager(session);
     }

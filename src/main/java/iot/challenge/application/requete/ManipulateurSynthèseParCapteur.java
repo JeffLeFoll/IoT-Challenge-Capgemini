@@ -1,18 +1,18 @@
 package iot.challenge.application.requete;
 
+import info.lefoll.socle.requete.ManipulateurDeRequête;
+import iot.challenge.application.depot.DépôtDeMessages;
+import iot.challenge.application.modele.SynthèseGénérée;
 import iot.challenge.application.requete.mongodb.AgrégationMongoDB;
 import iot.challenge.application.requete.mongodb.ConstructeurDOpérateur;
-import info.lefoll.socle.requete.ManipulateurDeRequête;
 import iot.challenge.application.requete.mongodb.OpérateurAgrégation;
-import iot.challenge.application.depot.DépôtDeMessages;
-import iot.challenge.application.modele.Synthesis;
 
 import javax.inject.Inject;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class ManipulateurSynthèseParCapteur implements ManipulateurDeRequête<SynthèseParCapteur, List<Synthesis>> {
+public class ManipulateurSynthèseParCapteur implements ManipulateurDeRequête<SynthèseParCapteur, List<SynthèseGénérée>> {
 
     @Inject
     public ManipulateurSynthèseParCapteur(DépôtDeMessages dépôt) {
@@ -20,11 +20,11 @@ public class ManipulateurSynthèseParCapteur implements ManipulateurDeRequête<S
     }
 
     @Override
-    public List<Synthesis> exécuter(SynthèseParCapteur requête) {
+    public List<SynthèseGénérée> exécuter(SynthèseParCapteur requête) {
 
         AgrégationMongoDB agrégation = fabriquerAgrégatSynthèse(requête.getDateRequête());
 
-        List<Synthesis> synthèsesParCapteur = dépôt.calculerAgrégationSynthèse(agrégation);
+        List<SynthèseGénérée> synthèsesParCapteur = dépôt.calculerAgrégationSynthèse(agrégation);
 
         return synthèsesParCapteur;
     }

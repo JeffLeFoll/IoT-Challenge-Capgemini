@@ -1,1 +1,0 @@
-CREATE KEYSPACE IOTChallenge WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'datacenter1' : 1 };

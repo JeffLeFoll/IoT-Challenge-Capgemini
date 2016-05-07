@@ -1,9 +1,6 @@
 package info.lefoll.socle.web;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import iot.challenge.application.injection.ApplicationModule;
 import net.codestory.http.WebServer;
@@ -20,7 +17,7 @@ public abstract class Serveur {
 
     private WebServer webServer;
 
-    public void démarrer(){
+    public void démarrer() {
         webServer = new WebServer();
 
         webServer.configure(this::configurerServeur);
@@ -31,7 +28,7 @@ public abstract class Serveur {
     private void configurerServeur(Routes routes) {
         routes.setIocAdapter(new GuiceAdapter(new ApplicationModule()));
 
-       ajouterExtension(routes);
+        ajouterExtension(routes);
 
         configurerRoutes(routes);
     }
@@ -49,14 +46,14 @@ public abstract class Serveur {
     }
 
     private void démarrerServeur() {
-        if(estEnModeHTTPS()){
+        if (estEnModeHTTPS()) {
             démarrerEnHTTPS();
         } else {
             démarrerEnHTTP();
         }
     }
 
-    private boolean estEnModeHTTPS(){
+    private boolean estEnModeHTTPS() {
         String modeDeConnexion = Optional.ofNullable(System.getenv("net")).orElse("http");
 
         return modeDeConnexion.equalsIgnoreCase("https");
@@ -70,6 +67,6 @@ public abstract class Serveur {
         webServer.startSSL(9443, Paths.get("server.crt"), Paths.get("server.der"));
     }
 
-   protected abstract void configurerRoutes(Routes routes);
+    protected abstract void configurerRoutes(Routes routes);
 
 }

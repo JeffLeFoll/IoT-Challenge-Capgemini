@@ -1,13 +1,13 @@
 package iot.challenge.application.requete;
 
-import iot.challenge.application.depot.DépôtDeMessages;
-import iot.challenge.application.modele.Message;
 import info.lefoll.socle.requete.ManipulateurDeRequête;
+import iot.challenge.application.depot.DépôtDeMessages;
+import iot.challenge.application.modele.MessageReçut;
 
 import javax.inject.Inject;
 import java.util.Optional;
 
-public class ManipulateurMessageParId implements ManipulateurDeRequête<MessageParId, Message> {
+public class ManipulateurMessageParId implements ManipulateurDeRequête<MessageParId, MessageReçut> {
 
     @Inject
     public ManipulateurMessageParId(DépôtDeMessages dépôt) {
@@ -15,9 +15,9 @@ public class ManipulateurMessageParId implements ManipulateurDeRequête<MessageP
     }
 
     @Override
-    public Message exécuter(MessageParId requête) {
+    public MessageReçut exécuter(MessageParId requête) {
 
-        Optional<Message> message = dépôt.rechercherParId(requête.getId());
+        Optional<MessageReçut> message = dépôt.rechercherParId(requête.getId());
 
         return message.orElse(null);
     }
