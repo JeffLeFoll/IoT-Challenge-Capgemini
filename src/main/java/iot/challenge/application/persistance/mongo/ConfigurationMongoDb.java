@@ -1,11 +1,6 @@
-package info.lefoll.socle.fondation.mongo;
+package iot.challenge.application.persistance.mongo;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.mongodb.DB;
@@ -14,14 +9,12 @@ import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import org.jongo.Jongo;
 import org.jongo.Mapper;
-import org.jongo.marshall.jackson.JacksonMapper;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.time.Instant;
 import java.util.List;
 
-import static org.jongo.marshall.jackson.JacksonMapper.*;
+import static org.jongo.marshall.jackson.JacksonMapper.Builder;
 
 public class ConfigurationMongoDb {
 

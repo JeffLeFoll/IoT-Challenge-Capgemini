@@ -1,13 +1,13 @@
 package info.lefoll.socle.requete;
 
+import iot.challenge.application.requete.mongodb.ConstructeurDOpérateur;
+import iot.challenge.application.requete.mongodb.OpérateurAgrégation;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.Instant;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OpérateurAgrégationTest {
+public class OpérateurAgrégationMongoDBTest {
 
     private OpérateurAgrégation opérateurAgrégation;
 

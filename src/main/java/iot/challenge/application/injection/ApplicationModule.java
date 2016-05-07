@@ -1,17 +1,18 @@
 package iot.challenge.application.injection;
 
+import com.datastax.driver.core.Session;
+import com.datastax.driver.mapping.MappingManager;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 import info.lefoll.socle.commande.BusDeCommande;
 import info.lefoll.socle.commande.ManipulateurDeCommande;
-import info.lefoll.socle.fondation.mongo.ConfigurationMongoDb;
+import iot.challenge.application.persistance.cassandra.ConfigurationCassandra;
+import iot.challenge.application.persistance.mongo.ConfigurationMongoDb;
 import info.lefoll.socle.depot.Dépôt;
 import info.lefoll.socle.fondation.guice.InjecteurGuiceDynamique;
-import info.lefoll.socle.fondation.mongo.ConnecteurMongoAvecJongo;
 import info.lefoll.socle.requete.BusDeRequête;
 import info.lefoll.socle.requete.ManipulateurDeRequête;
 import org.jongo.Jongo;
@@ -54,8 +55,8 @@ public class ApplicationModule extends AbstractModule {
         return properties;
     }
 
-    private void configurerPersistance() {
-
+    private void configurerPersistance(){
+        InjecteurGuiceDynamique.listerEtBinderLesTypes(binder(),ManipulateurDeCommande.class, "iot.challenge.application.persistance");
     }
 
     private void configurerCommandes() {
@@ -80,6 +81,20 @@ public class ApplicationModule extends AbstractModule {
     public Jongo jongo(ConfigurationMongoDb configurationMongoDb) throws UnknownHostException {
 
         return configurationMongoDb.clientJongo();
+    }
+
+    @Provides
+    @Singleton
+    public Session cassandra(ConfigurationCassandra configurationCassandra) throws UnknownHostException {
+
+        return configurationCassandra.sessionCassandra();
+    }
+
+    @Provides
+    @Singleton
+    public MappingManager mappingManagerCassandra(Session session){
+
+        return new MappingManager(session);
     }
 
     private static Logger LOGGER = LoggerFactory.getLogger(ApplicationModule.class);

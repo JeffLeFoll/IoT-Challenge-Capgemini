@@ -1,12 +1,11 @@
 package iot.challenge.application.resources;
 
-import com.google.common.collect.Lists;
+import info.lefoll.socle.commande.BusDeCommande;
+import info.lefoll.socle.requete.BusDeRequête;
 import iot.challenge.application.commande.EnregistrerMessage;
 import iot.challenge.application.modele.Message;
 import iot.challenge.application.modele.Synthesis;
 import iot.challenge.application.requete.MessageParId;
-import info.lefoll.socle.commande.BusDeCommande;
-import info.lefoll.socle.requete.BusDeRequête;
 import iot.challenge.application.requete.SynthèseParCapteur;
 import net.codestory.http.annotations.Get;
 import net.codestory.http.annotations.Post;
@@ -42,6 +41,14 @@ public class Messages {
 
     @Get("/synthesis")
     public List<Synthesis> générerSynthèse(){
+
+        List<Synthesis> synthèseDeChaqueCapteurs = (List<Synthesis>) busDeRequête.traiterRequête(new SynthèseParCapteur(Instant.now()));
+
+        return NotFoundException.notFoundIfNull(synthèseDeChaqueCapteurs);
+    }
+
+    @Get("/synthesis?timestamp=:heureDebut&duration=:période")
+    public List<Synthesis> générerSynthèsePourLaDurée(Instant heureDebut, int période){
 
         List<Synthesis> synthèseDeChaqueCapteurs = (List<Synthesis>) busDeRequête.traiterRequête(new SynthèseParCapteur(Instant.now()));
 

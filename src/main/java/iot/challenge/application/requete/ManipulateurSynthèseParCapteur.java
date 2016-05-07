@@ -1,16 +1,14 @@
 package iot.challenge.application.requete;
 
-import com.google.common.collect.Lists;
-import info.lefoll.socle.requete.Agrégation;
-import info.lefoll.socle.requete.ConstructeurDOpérateur;
+import iot.challenge.application.requete.mongodb.AgrégationMongoDB;
+import iot.challenge.application.requete.mongodb.ConstructeurDOpérateur;
 import info.lefoll.socle.requete.ManipulateurDeRequête;
-import info.lefoll.socle.requete.OpérateurAgrégation;
+import iot.challenge.application.requete.mongodb.OpérateurAgrégation;
 import iot.challenge.application.depot.DépôtDeMessages;
 import iot.challenge.application.modele.Synthesis;
 
 import javax.inject.Inject;
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -24,16 +22,16 @@ public class ManipulateurSynthèseParCapteur implements ManipulateurDeRequête<S
     @Override
     public List<Synthesis> exécuter(SynthèseParCapteur requête) {
 
-        Agrégation agrégation = fabriquerAgrégatSynthèse(requête.getDateRequête());
+        AgrégationMongoDB agrégation = fabriquerAgrégatSynthèse(requête.getDateRequête());
 
         List<Synthesis> synthèsesParCapteur = dépôt.calculerAgrégationSynthèse(agrégation);
 
         return synthèsesParCapteur;
     }
 
-    public Agrégation fabriquerAgrégatSynthèse(Instant dateRequête) {
+    public AgrégationMongoDB fabriquerAgrégatSynthèse(Instant dateRequête) {
 
-        Agrégation agrégation = new Agrégation();
+        AgrégationMongoDB agrégation = new AgrégationMongoDB();
 
         agrégation.setMatch(fabriquerMatch(dateRequête));
         agrégation.setGroup(fabriquerGroup());

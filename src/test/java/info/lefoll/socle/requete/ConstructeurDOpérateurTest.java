@@ -1,5 +1,7 @@
 package info.lefoll.socle.requete;
 
+import iot.challenge.application.requete.mongodb.ConstructeurDOpérateur;
+import iot.challenge.application.requete.mongodb.OpérateurAgrégation;
 import org.junit.Test;
 
 import java.time.Instant;

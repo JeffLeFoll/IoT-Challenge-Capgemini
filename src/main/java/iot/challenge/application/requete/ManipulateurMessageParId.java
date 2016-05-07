@@ -17,7 +17,7 @@ public class ManipulateurMessageParId implements ManipulateurDeRequête<MessageP
     @Override
     public Message exécuter(MessageParId requête) {
 
-        Optional<Message> message = dépôt.rechercherEntitéParId(requête.getId());
+        Optional<Message> message = dépôt.rechercherParId(requête.getId());
 
         return message.orElse(null);
     }

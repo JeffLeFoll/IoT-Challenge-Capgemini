@@ -14,7 +14,7 @@ public class ManipulateurEnregistrerMessage implements ManipulateurDeCommande<En
 
     @Override
     public void exécuter(EnregistrerMessage commande) {
-        dépôt.créerEntité(commande.getMessage());
+        dépôt.créer(commande.getMessage());
     }
 
     private final DépôtDeMessages dépôt;

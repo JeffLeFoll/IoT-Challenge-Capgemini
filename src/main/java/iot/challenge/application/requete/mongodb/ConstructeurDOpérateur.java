@@ -1,6 +1,4 @@
-package info.lefoll.socle.requete;
-
-import java.time.Instant;
+package iot.challenge.application.requete.mongodb;
 
 public class ConstructeurDOpérateur {
 

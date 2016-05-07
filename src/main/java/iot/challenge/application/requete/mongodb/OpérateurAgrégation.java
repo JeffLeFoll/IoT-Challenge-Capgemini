@@ -1,4 +1,4 @@
-package info.lefoll.socle.requete;
+package iot.challenge.application.requete.mongodb;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
