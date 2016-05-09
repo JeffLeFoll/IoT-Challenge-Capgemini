@@ -1,6 +1,5 @@
 package iot.challenge.application.persistance.mongo;
 
-import com.google.common.reflect.TypeToken;
 import info.lefoll.socle.persistance.Connecteur;
 import info.lefoll.socle.requete.Agrégation;
 import iot.challenge.application.requete.mongodb.AgrégationMongoDB;
