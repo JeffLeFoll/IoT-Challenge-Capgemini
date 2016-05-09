@@ -8,6 +8,7 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 import info.lefoll.socle.persistance.Connecteur;
+import info.lefoll.socle.requete.Agrégation;
 import iot.challenge.application.requete.cassandra.AgrégationCassandra;
 
 import javax.inject.Inject;
@@ -38,6 +39,11 @@ public class ConnecteurCassandra implements Connecteur {
         T entité = (T) mapperDeDonnée().get(id);
 
         return Optional.ofNullable(entité);
+    }
+
+    @Override
+    public <T> Optional<T> effectuerRequête(Agrégation agrégation) {
+        return null;
     }
 
     public Optional<ResultSet> exécuterRequete(AgrégationCassandra agrégation) {

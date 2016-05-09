@@ -1,5 +1,6 @@
 package iot.challenge.application.injection;
 
+import com.couchbase.client.java.Bucket;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.MappingManager;
 import com.google.common.io.ByteSource;
@@ -11,10 +12,19 @@ import info.lefoll.socle.commande.BusDeCommande;
 import info.lefoll.socle.commande.ManipulateurDeCommande;
 import info.lefoll.socle.depot.Dépôt;
 import info.lefoll.socle.fondation.guice.InjecteurGuiceDynamique;
+import info.lefoll.socle.persistance.Connecteur;
 import info.lefoll.socle.requete.BusDeRequête;
 import info.lefoll.socle.requete.ManipulateurDeRequête;
+import iot.challenge.application.persistance.cassandra.Cassandra;
 import iot.challenge.application.persistance.cassandra.ConfigurationCassandra;
+import iot.challenge.application.persistance.cassandra.ConnecteurCassandra;
+import iot.challenge.application.persistance.couchbase.ConfigurationCouchBase;
+import iot.challenge.application.persistance.couchbase.ConnecteurCouchBase;
+import iot.challenge.application.persistance.couchbase.CouchBase;
 import iot.challenge.application.persistance.mongo.ConfigurationMongoDb;
+import iot.challenge.application.persistance.mongo.ConnecteurMongoAvecJongo;
+import iot.challenge.application.persistance.mongo.MongoDB;
+import iot.challenge.application.persistance.sqlite.ConfigurationSQLite;
 import org.jongo.Jongo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +33,8 @@ import javax.inject.Singleton;
 import java.io.IOException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -56,7 +68,10 @@ public class ApplicationModule extends AbstractModule {
     }
 
     private void configurerPersistance() {
-        InjecteurGuiceDynamique.listerEtBinderLesTypes(binder(), ManipulateurDeCommande.class, "iot.challenge.application.persistance");
+
+        bind(Connecteur.class).annotatedWith(MongoDB.class).to(ConnecteurMongoAvecJongo.class);
+        bind(Connecteur.class).annotatedWith(Cassandra.class).to(ConnecteurCassandra.class);
+        bind(Connecteur.class).annotatedWith(CouchBase.class).to(ConnecteurCouchBase.class);
     }
 
     private void configurerCommandes() {
@@ -78,6 +93,13 @@ public class ApplicationModule extends AbstractModule {
 
     @Provides
     @Singleton
+    public Bucket bucketCouchBase(ConfigurationCouchBase configurationCouchBase) throws UnknownHostException {
+
+        return configurationCouchBase.bucketCouchBase();
+    }
+
+    @Provides
+    @Singleton
     public Jongo jongo(ConfigurationMongoDb configurationMongoDb) throws UnknownHostException {
 
         return configurationMongoDb.clientJongo();
@@ -95,6 +117,13 @@ public class ApplicationModule extends AbstractModule {
     public MappingManager mappingManagerCassandra(Session session) {
 
         return new MappingManager(session);
+    }
+
+    @Provides
+    @Singleton
+    public Statement sqlite(ConfigurationSQLite configurationSQLite) throws SQLException {
+
+        return configurationSQLite.fabriquerStatementSQLite();
     }
 
     private static Logger LOGGER = LoggerFactory.getLogger(ApplicationModule.class);

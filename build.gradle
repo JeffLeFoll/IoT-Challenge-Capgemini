@@ -37,6 +37,8 @@ dependencies {
 
     compile 'com.couchbase.client:java-client:2.2.6'
 
+    compile 'org.xerial:sqlite-jdbc:3.8.11.2'
+
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.6'
 
 

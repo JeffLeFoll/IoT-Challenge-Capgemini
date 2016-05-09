@@ -2,7 +2,9 @@ package iot.challenge.application.persistance.mongo;
 
 import com.google.common.reflect.TypeToken;
 import info.lefoll.socle.persistance.Connecteur;
+import info.lefoll.socle.requete.Agrégation;
 import iot.challenge.application.requete.mongodb.AgrégationMongoDB;
+import iot.challenge.application.requete.mongodb.OpérateurAgrégation;
 import org.jongo.Aggregate;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -30,29 +32,28 @@ public class ConnecteurMongoAvecJongo implements Connecteur {
     @Override
     public <T> Optional<T> rechercherEntitéParId(String id) {
 
-        T document = collectionMongo().findOne("{_id: #}", id).as(déterminerLeTypeEntité());
+        T document = collectionMongo().findOne("{_id: #}", id).as((Class<T>) typeDeLEntité);
 
         return Optional.ofNullable(document);
     }
 
-    public Optional<Aggregate> effectuerAgrégation(AgrégationMongoDB agrégation) {
+    @Override
+    public Optional<Aggregate> effectuerRequête(Agrégation agrégation) {
 
-        Aggregate résultatAgrégation = collectionMongo().aggregate(agrégation.getMatch().getEtape(), agrégation.getMatch().getParamètres())
-                .and(agrégation.getGroup().getEtape());
+        assert agrégation instanceof AgrégationMongoDB;
+
+        OpérateurAgrégation match = ((AgrégationMongoDB) agrégation).getMatch();
+        OpérateurAgrégation group = ((AgrégationMongoDB) agrégation).getGroup();
+
+        Aggregate résultatAgrégation = collectionMongo()
+                .aggregate(match.getEtape(), match.getParamètres())
+                .and(group.getEtape());
 
         return Optional.ofNullable(résultatAgrégation);
     }
 
     private MongoCollection collectionMongo() {
         return jongo.getCollection(typeDeLEntité.getSimpleName());
-    }
-
-    private <T> Class<T> déterminerLeTypeEntité() {
-
-        TypeToken<T> type = new TypeToken<T>(getClass()) {
-        };
-
-        return (Class<T>) type.getRawType();
     }
 
     private Jongo jongo;

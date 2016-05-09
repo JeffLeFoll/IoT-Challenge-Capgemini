@@ -13,12 +13,12 @@ import javax.inject.Named;
 public class ConfigurationCassandra {
 
     public Session sessionCassandra() {
-        Cluster cluster = fabriquerClusterCassndra();
+        Cluster cluster = fabriquerClusterCassandra();
 
         return cluster.connect();
     }
 
-    private Cluster fabriquerClusterCassndra() {
+    private Cluster fabriquerClusterCassandra() {
 
         Cluster cluster = Cluster.builder()
                 .withClusterName(nom)
