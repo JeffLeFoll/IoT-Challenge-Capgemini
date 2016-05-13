@@ -1,4 +1,4 @@
-package iot.challenge.application.persistance.sqlite;
+package iot.challenge.application.persistance.sql;
 
 import com.google.common.base.Strings;
 
@@ -9,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ConfigurationSQLite {
+public class ConfigurationSQL {
 
     public Statement fabriquerStatementSQLite() throws SQLException {
 

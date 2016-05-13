@@ -24,7 +24,9 @@ import iot.challenge.application.persistance.couchbase.CouchBase;
 import iot.challenge.application.persistance.mongo.ConfigurationMongoDb;
 import iot.challenge.application.persistance.mongo.ConnecteurMongoAvecJongo;
 import iot.challenge.application.persistance.mongo.MongoDB;
-import iot.challenge.application.persistance.sqlite.ConfigurationSQLite;
+import iot.challenge.application.persistance.sql.ConfigurationSQL;
+import iot.challenge.application.persistance.sql.ConnecteurSQL;
+import iot.challenge.application.persistance.sql.SQL;
 import org.jongo.Jongo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +74,7 @@ public class ApplicationModule extends AbstractModule {
         bind(Connecteur.class).annotatedWith(MongoDB.class).to(ConnecteurMongoAvecJongo.class);
         bind(Connecteur.class).annotatedWith(Cassandra.class).to(ConnecteurCassandra.class);
         bind(Connecteur.class).annotatedWith(CouchBase.class).to(ConnecteurCouchBase.class);
+        bind(Connecteur.class).annotatedWith(SQL.class).to(ConnecteurSQL.class);
     }
 
     private void configurerCommandes() {
@@ -121,9 +124,9 @@ public class ApplicationModule extends AbstractModule {
 
     @Provides
     @Singleton
-    public Statement sqlite(ConfigurationSQLite configurationSQLite) throws SQLException {
+    public Statement sqlite(ConfigurationSQL configurationSQL) throws SQLException {
 
-        return configurationSQLite.fabriquerStatementSQLite();
+        return configurationSQL.fabriquerStatementSQLite();
     }
 
     private static Logger LOGGER = LoggerFactory.getLogger(ApplicationModule.class);

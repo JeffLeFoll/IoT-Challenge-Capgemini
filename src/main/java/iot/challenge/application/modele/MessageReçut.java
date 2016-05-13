@@ -5,7 +5,7 @@ import org.jongo.marshall.jackson.oid.MongoId;
 
 public class MessageReçut extends Message {
 
-    @MongoId
+   /*@MongoId
     private String id = null;
 
     @Override
@@ -16,5 +16,9 @@ public class MessageReçut extends Message {
     @Override
     public void setId(String id) {
         this.id = id;
+    }*/
+
+    public String insertSQL(){
+        return "INSERT INTO Messages(id, timestamp, sensorType, value) values(?,strftime('%Y-%m-%dT%H:%M:%fZ', ?),?,?);";
     }
 }

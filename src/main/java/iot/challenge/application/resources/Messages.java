@@ -40,18 +40,14 @@ public class Messages {
         return NotFoundException.notFoundIfNull(message);
     }
 
-    @Get("/synthesis")
-    public List<Synthesis> générerSynthèse() {
-
-        List<Synthesis> synthèseDeChaqueCapteurs = (List<Synthesis>) busDeRequête.traiterRequête(new SynthèseParCapteur(Instant.now()));
-
-        return NotFoundException.notFoundIfNull(synthèseDeChaqueCapteurs);
-    }
-
     @Get("/synthesis?timestamp=:heureDebut&duration=:période")
     public List<Synthesis> générerSynthèsePourLaDurée(Instant heureDebut, int période) {
 
-        List<Synthesis> synthèseDeChaqueCapteurs = (List<Synthesis>) busDeRequête.traiterRequête(new SynthèseParCapteur(Instant.now()));
+        SynthèseParCapteur requêteSynthèseParCapteur = new SynthèseParCapteur();
+        requêteSynthèseParCapteur.setDateRequête(heureDebut);
+        requêteSynthèseParCapteur.setDurée(période);
+
+        List<Synthesis> synthèseDeChaqueCapteurs = (List<Synthesis>) busDeRequête.traiterRequête(requêteSynthèseParCapteur);
 
         return NotFoundException.notFoundIfNull(synthèseDeChaqueCapteurs);
     }

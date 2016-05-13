@@ -1,4 +1,4 @@
-package iot.challenge.application.persistance.sqlite;
+package iot.challenge.application.persistance.sql;
 
 import com.google.inject.BindingAnnotation;
 
@@ -11,5 +11,5 @@ import static java.lang.annotation.ElementType.PARAMETER;
 
 @BindingAnnotation
 @Target({ PARAMETER }) @Retention(RUNTIME)
-public @interface SQLite {
+public @interface SQL {
 }
