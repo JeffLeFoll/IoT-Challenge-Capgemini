@@ -1,18 +1,32 @@
 <configuration>
+    <property name="LOG_PATH" value="logs" />
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>ServeurREST:api>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
+    <appender name="RollingFile-Appender" class="ch.qos.Logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/rollingfile.log</file>
+        <rollingPolicy class="ch.qos.Logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ARCHIVE}/rollingfile.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>ServeurREST:api>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <root level="warn">
-        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="RollingFile-Appender"/>
     </root>
-    <logger name="application" additivity="false" level="DEBUG">
-        <appender-ref ref="STDOUT"/>
+    <logger name="iot.challenge.application" additivity="false" level="DEBUG">
+        <appender-ref ref="RollingFile-Appender"/>
     </logger>
-    <logger name="socle" additivity="false" level="DEBUG">
-        <appender-ref ref="STDOUT"/>
+    <logger name="info.lefoll.socle" additivity="false" level="DEBUG">
+        <appender-ref ref="RollingFile-Appender"/>
     </logger>
 </configuration>
 

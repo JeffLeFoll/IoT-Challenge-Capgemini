@@ -8,14 +8,14 @@ import net.codestory.http.extensions.Extensions;
 import net.codestory.http.injection.GuiceAdapter;
 import net.codestory.http.misc.Env;
 import net.codestory.http.routes.Routes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.file.Paths;
 import java.util.Optional;
 
 
 public abstract class Serveur {
-
-    private WebServer webServer;
 
     public void démarrer() {
         webServer = new WebServer();
@@ -60,13 +60,23 @@ public abstract class Serveur {
     }
 
     private void démarrerEnHTTP() {
-        webServer.start(80);
+        LOGGER.info("démarrerEnHTTP sur le port %s", PORT_80);
+
+        webServer.start(PORT_80);
     }
 
     private void démarrerEnHTTPS() {
-        webServer.startSSL(9443, Paths.get("server.crt"), Paths.get("server.der"));
+        LOGGER.info("démarrerEnHTTPS sur le port %s", PORT_9443);
+
+        webServer.startSSL(PORT_9443, Paths.get("server.crt"), Paths.get("server.der"));
     }
 
     protected abstract void configurerRoutes(Routes routes);
 
+    private WebServer webServer;
+
+    private static final int PORT_80 = 80;
+    private static final int PORT_9443 = 9443;
+
+    private static Logger LOGGER = LoggerFactory.getLogger(Serveur.class);
 }

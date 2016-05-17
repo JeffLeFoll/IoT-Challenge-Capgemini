@@ -54,6 +54,5 @@ public class ConfigurationSQL {
     @Named("db.motDePasse")
     public String motDePasse;
 
-
     private static Logger LOGGER = LoggerFactory.getLogger(ConfigurationSQL.class);
 }
