@@ -14,7 +14,12 @@ Persistance
 
 ## Utilisation
 Pour compiler le projet avec gradle et démarrer le serveur :
-```bash
+```linux
+./gradlew stage
+
+java -cp ./build/dep/*:./build/libs/* iot.challenge.application.ServeurApplication
+```
+```windows
 ./gradlew stage
 
 java -cp ./build/dep/*;./build/libs/* iot.challenge.application.ServeurApplication
