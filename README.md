@@ -10,17 +10,19 @@ Injection de dépendances
 - Guice + Guice-multibindings
 
 Persistance
-- [Jongo](https://github.com/bguerout/jongo) pounr MongoDB
+- SQLite3 avec sqlite-jdbc
 
 ## Utilisation
 Pour compiler le projet avec gradle et démarrer le serveur :
-```linux
+Unix:
+```bash
 ./gradlew stage
 
 java -cp ./build/dep/*:./build/libs/* iot.challenge.application.ServeurApplication
 ```
-```windows
-./gradlew stage
+Windows
+```bash
+gradlew stage
 
 java -cp ./build/dep/*;./build/libs/* iot.challenge.application.ServeurApplication
 ```
