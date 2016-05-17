@@ -1,1 +1,1 @@
-java -cp ./build/dep/*;./build/libs/* iot.challenge.application.ServeurApplication
+java -cp ./build/dep/*;./build/libs/* -DPROD_MODE=true iot.challenge.application.ServeurApplication
