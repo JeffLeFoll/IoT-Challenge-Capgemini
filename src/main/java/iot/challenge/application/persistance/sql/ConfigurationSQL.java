@@ -1,6 +1,9 @@
 package iot.challenge.application.persistance.sql;
 
 import com.google.common.base.Strings;
+import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,7 +27,9 @@ public class ConfigurationSQL {
     private Connection fabriquerConnection() throws SQLException {
 
         DriverManager.registerDriver(new org.sqlite.JDBC());
+
         String url = String.format("jdbc:sqlite:%s", chemin);
+        LOGGER.info("Chargement de la base %s avec l'url %s", chemin, url);
 
         if(avecAuthentificationBDD()){
             return DriverManager.getConnection(url, utilisateur, motDePasse);
@@ -49,4 +54,6 @@ public class ConfigurationSQL {
     @Named("db.motDePasse")
     public String motDePasse;
 
+
+    private static Logger LOGGER = LoggerFactory.getLogger(ConfigurationSQL.class);
 }
