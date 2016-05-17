@@ -85,7 +85,7 @@ public class DépôtDeMessages implements Dépôt<MessageReçut> {
                     synthèse.setSensorType(rs.getInt("sensorType"));
                     synthèse.setMinValue(rs.getLong("maxValue"));
                     synthèse.setMaxValue(rs.getLong("minValue"));
-                    synthèse.setMediumValue(rs.getDouble("mediumValue"));
+                    synthèse.setMediumValue(rs.getLong("mediumValue"));
 
                     synthèses.add(synthèse);
                 }

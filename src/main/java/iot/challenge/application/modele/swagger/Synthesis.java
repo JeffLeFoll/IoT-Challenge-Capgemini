@@ -15,7 +15,7 @@ public class Synthesis   {
   private Integer sensorType = null;
   private Long minValue = null;
   private Long maxValue = null;
-  private Double mediumValue = null;
+  private Long mediumValue = null;
 
   
   /**
@@ -78,7 +78,7 @@ public class Synthesis   {
   /**
    * Valeur moyenne des donn\u00E9es transmises par ce type de capteur arrondie \u00E0 deux d\u00E9cimales
    **/
-  public Synthesis mediumValue(Double mediumValue) {
+  public Synthesis mediumValue(Long mediumValue) {
     this.mediumValue = mediumValue;
     return this;
   }
@@ -86,10 +86,10 @@ public class Synthesis   {
   
   @ApiModelProperty(value = "Valeur moyenne des donn\u00E9es transmises par ce type de capteur arrondie \u00E0 deux d\u00E9cimales")
   @JsonProperty("mediumValue")
-  public Double getMediumValue() {
+  public Long getMediumValue() {
     return mediumValue;
   }
-  public void setMediumValue(Double mediumValue) {
+  public void setMediumValue(Long mediumValue) {
     this.mediumValue = mediumValue;
   }
 

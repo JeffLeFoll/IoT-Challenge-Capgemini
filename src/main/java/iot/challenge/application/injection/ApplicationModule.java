@@ -56,7 +56,7 @@ public class ApplicationModule extends AbstractModule {
     }
 
     private void configurerPersistance() {
-        
+
         bind(Connecteur.class).annotatedWith(SQL.class).to(ConnecteurSQL.class);
     }
 

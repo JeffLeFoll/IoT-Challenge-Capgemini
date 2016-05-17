@@ -34,7 +34,7 @@ public class ManipulateurSynthèseParCapteur implements ManipulateurDeRequête<S
             "sensorType as sensorType, " +
             "max(value) as maxValue, " +
             "min(value) as minValue, " +
-            "round(avg(value), 2) as mediumValue " +
+            "round(avg(value), 0) as mediumValue " +
             "FROM 'Messages' " +
             "WHERE strftime('%s', timestamp) BETWEEN strftime('%s', ?) AND strftime('%s', ?) " +
             "Group by sensorType;";
