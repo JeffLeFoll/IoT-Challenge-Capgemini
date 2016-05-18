@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-    <appender name="RollingFile-Appender" class="ch.qos.Logback.core.rolling.RollingFileAppender">
+    <!--appender name="RollingFile-Appender" class="ch.qos.Logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/rollingfile.log</file>
         <rollingPolicy class="ch.qos.Logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_ARCHIVE}/rollingfile.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -17,16 +17,16 @@
         <encoder>
             <pattern>ServeurREST:api>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
-    </appender>
+    </appender-->
 
     <root level="warn">
-        <appender-ref ref="RollingFile-Appender"/>
+        <appender-ref ref="STDOUT"/>
     </root>
     <logger name="iot.challenge.application" additivity="false" level="DEBUG">
-        <appender-ref ref="RollingFile-Appender"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
     <logger name="info.lefoll.socle" additivity="false" level="DEBUG">
-        <appender-ref ref="RollingFile-Appender"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
 </configuration>
 

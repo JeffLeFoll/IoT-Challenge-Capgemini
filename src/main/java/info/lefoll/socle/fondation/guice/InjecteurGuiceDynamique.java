@@ -14,7 +14,7 @@ public class InjecteurGuiceDynamique {
 
     public static <T> void listerEtBinderLesTypes(Binder binder, Class<T> typeABinder, String nomDePackage) {
 
-        LOGGER.debug("listerEtBinderLesTypes pour le type %s dans le package %s", typeABinder.getSimpleName(), nomDePackage);
+        LOGGER.debug(String.format("listerEtBinderLesTypes pour le type %s dans le package %s", typeABinder.getSimpleName(), nomDePackage));
 
         Multibinder<T> guiceMultibinder = Multibinder.newSetBinder(binder, typeABinder);
 

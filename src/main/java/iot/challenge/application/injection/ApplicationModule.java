@@ -12,6 +12,12 @@ import info.lefoll.socle.fondation.guice.InjecteurGuiceDynamique;
 import info.lefoll.socle.persistance.Connecteur;
 import info.lefoll.socle.requete.BusDeRequête;
 import info.lefoll.socle.requete.ManipulateurDeRequête;
+import iot.challenge.application.persistance.cassandra.Cassandra;
+import iot.challenge.application.persistance.cassandra.ConnecteurCassandra;
+import iot.challenge.application.persistance.couchbase.ConnecteurCouchBase;
+import iot.challenge.application.persistance.couchbase.CouchBase;
+import iot.challenge.application.persistance.mongo.ConnecteurMongoAvecJongo;
+import iot.challenge.application.persistance.mongo.MongoDB;
 import iot.challenge.application.persistance.sql.ConfigurationSQL;
 import iot.challenge.application.persistance.sql.ConnecteurSQL;
 import iot.challenge.application.persistance.sql.SQL;
@@ -56,6 +62,7 @@ public class ApplicationModule extends AbstractModule {
     }
 
     private void configurerPersistance() {
+
 
         bind(Connecteur.class).annotatedWith(SQL.class).to(ConnecteurSQL.class);
     }

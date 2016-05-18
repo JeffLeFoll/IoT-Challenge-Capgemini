@@ -46,7 +46,7 @@ public class DépôtDeMessages implements Dépôt<MessageReçut> {
     public Optional<MessageReçut> rechercherParId(String id) {
 
         AgrégationSQL agrégation = new AgrégationSQL();
-        agrégation.ajouterRequêteSQL("SELECT * FROM Messages where id=?;");
+        agrégation.ajouterRequêteSQL("SELECT * FROM Messages where id='?';");
         agrégation.ajouterValeurs(id);
 
         return connecteur.avecLeProcesseur(this::construireMessageReçut).effectuerRequête(agrégation);
@@ -83,9 +83,9 @@ public class DépôtDeMessages implements Dépôt<MessageReçut> {
                 while(rs.next()){
                     SynthèseGénérée synthèse = new SynthèseGénérée();
                     synthèse.setSensorType(rs.getInt("sensorType"));
-                    synthèse.setMinValue(rs.getLong("maxValue"));
-                    synthèse.setMaxValue(rs.getLong("minValue"));
-                    synthèse.setMediumValue(rs.getDouble("mediumValue"));
+                    synthèse.setMinValue(rs.getLong("minValue"));
+                    synthèse.setMaxValue(rs.getLong("maxValue"));
+                    synthèse.setMediumValue(rs.getFloat("mediumValue"));
 
                     synthèses.add(synthèse);
                 }

@@ -3,6 +3,7 @@ package iot.challenge.application.modele.swagger;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 
@@ -15,7 +16,7 @@ public class Synthesis   {
   private Integer sensorType = null;
   private Long minValue = null;
   private Long maxValue = null;
-  private Double mediumValue = null;
+  private Float mediumValue = null;
 
   
   /**
@@ -78,7 +79,7 @@ public class Synthesis   {
   /**
    * Valeur moyenne des donn\u00E9es transmises par ce type de capteur arrondie \u00E0 deux d\u00E9cimales
    **/
-  public Synthesis mediumValue(Double mediumValue) {
+  public Synthesis mediumValue(Float mediumValue) {
     this.mediumValue = mediumValue;
     return this;
   }
@@ -86,10 +87,10 @@ public class Synthesis   {
   
   @ApiModelProperty(value = "Valeur moyenne des donn\u00E9es transmises par ce type de capteur arrondie \u00E0 deux d\u00E9cimales")
   @JsonProperty("mediumValue")
-  public Double getMediumValue() {
+  public Float getMediumValue() {
     return mediumValue;
   }
-  public void setMediumValue(Double mediumValue) {
+  public void setMediumValue(Float mediumValue) {
     this.mediumValue = mediumValue;
   }
 

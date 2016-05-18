@@ -60,13 +60,13 @@ public abstract class Serveur {
     }
 
     private void démarrerEnHTTP() {
-        LOGGER.info("démarrerEnHTTP sur le port %s", PORT_80);
+        LOGGER.info(String.format("démarrerEnHTTP sur le port %s", PORT_80));
 
         webServer.start(PORT_80);
     }
 
     private void démarrerEnHTTPS() {
-        LOGGER.info("démarrerEnHTTPS sur le port %s", PORT_9443);
+        LOGGER.info(String.format("démarrerEnHTTPS sur le port %s", PORT_9443));
 
         webServer.startSSL(PORT_9443, Paths.get("server.crt"), Paths.get("server.der"));
     }

@@ -8,13 +8,16 @@ import iot.challenge.application.modele.swagger.Message;
 import iot.challenge.application.modele.swagger.Synthesis;
 import iot.challenge.application.requete.MessageParId;
 import iot.challenge.application.requete.SynthèseParCapteur;
+import net.codestory.http.annotations.AllowOrigin;
 import net.codestory.http.annotations.Get;
 import net.codestory.http.annotations.Post;
 import net.codestory.http.annotations.Prefix;
 import net.codestory.http.errors.NotFoundException;
+import net.codestory.http.payload.Payload;
 
 import javax.inject.Inject;
 import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Prefix("/messages")
@@ -26,25 +29,22 @@ public class Messages {
         this.busDeRequête = busDeRequête;
     }
 
-    @Post("/")
-    public void enregistrerMessage(MessageReçut message) {
+    @Post("")
+    @AllowOrigin("*")
+    public Payload enregistrerMessage(MessageReçut message) {
 
         busDeCommande.traiterCommande(new EnregistrerMessage(message));
-    }
 
-    @Get("/:id")
-    public Message rechercherParId(String id) {
-
-        Message message = (Message) busDeRequête.traiterRequête(new MessageParId(id));
-
-        return NotFoundException.notFoundIfNull(message);
+        return new Payload(200);
     }
 
     @Get("/synthesis?timestamp=:heureDebut&duration=:période")
-    public List<Synthesis> générerSynthèsePourLaDurée(Instant heureDebut, int période) {
+    public List<Synthesis> générerSynthèsePourLaDurée(String heureDebut, int période) {
+
+        Instant dateRequête = Instant.from(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").parse(heureDebut));
 
         SynthèseParCapteur requêteSynthèseParCapteur = new SynthèseParCapteur();
-        requêteSynthèseParCapteur.setDateRequête(heureDebut);
+        requêteSynthèseParCapteur.setDateRequête(dateRequête);
         requêteSynthèseParCapteur.setDurée(période);
 
         List<Synthesis> synthèseDeChaqueCapteurs = (List<Synthesis>) busDeRequête.traiterRequête(requêteSynthèseParCapteur);
