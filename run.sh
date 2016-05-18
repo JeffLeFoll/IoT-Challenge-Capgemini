@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export env=prod
+export environment=prod
 
 cp sqlite-patch/* build/dep/
 

@@ -47,7 +47,7 @@ public class ApplicationModule extends AbstractModule {
     }
 
     private Properties chargerPropriétés() {
-        URL url = Resources.getResource("env/" + Optional.ofNullable(System.getenv("env")).orElse("dev") + "/configuration.properties");
+        URL url = Resources.getResource("env/" + Optional.ofNullable(System.getenv("environment")).orElse("dev") + "/configuration.properties");
 
         ByteSource inputSupplier = Resources.asByteSource(url);
 
