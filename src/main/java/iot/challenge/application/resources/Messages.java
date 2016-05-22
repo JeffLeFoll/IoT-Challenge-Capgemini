@@ -39,12 +39,10 @@ public class Messages {
     }
 
     @Get("/synthesis?timestamp=:heureDebut&duration=:période")
-    public List<Synthesis> générerSynthèsePourLaDurée(String heureDebut, int période) {
-
-        Instant dateRequête = Instant.from(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").parse(heureDebut));
+    public List<Synthesis> générerSynthèsePourLaDurée(Instant heureDebut, int période) {
 
         SynthèseParCapteur requêteSynthèseParCapteur = new SynthèseParCapteur();
-        requêteSynthèseParCapteur.setDateRequête(dateRequête);
+        requêteSynthèseParCapteur.setDateRequête(heureDebut);
         requêteSynthèseParCapteur.setDurée(période);
 
         List<Synthesis> synthèseDeChaqueCapteurs = (List<Synthesis>) busDeRequête.traiterRequête(requêteSynthèseParCapteur);

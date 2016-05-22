@@ -29,7 +29,7 @@ public class ConfigurationSQL {
         DriverManager.registerDriver(new org.sqlite.JDBC());
 
         String url = String.format("jdbc:sqlite:%s", chemin);
-        LOGGER.info("Chargement de la base %s avec l'url %s", chemin, url);
+        LOGGER.info(String.format("Chargement de la base %s avec l'url %s", chemin, url));
 
         if(avecAuthentificationBDD()){
             return DriverManager.getConnection(url, utilisateur, motDePasse);

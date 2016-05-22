@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -85,7 +86,7 @@ public class DépôtDeMessages implements Dépôt<MessageReçut> {
                     synthèse.setSensorType(rs.getInt("sensorType"));
                     synthèse.setMinValue(rs.getLong("minValue"));
                     synthèse.setMaxValue(rs.getLong("maxValue"));
-                    synthèse.setMediumValue(rs.getFloat("mediumValue"));
+                    synthèse.setMediumValue(rs.getBigDecimal("mediumValue").setScale(2, RoundingMode.HALF_UP));
 
                     synthèses.add(synthèse);
                 }
