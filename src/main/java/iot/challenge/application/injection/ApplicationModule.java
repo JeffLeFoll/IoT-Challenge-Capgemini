@@ -16,17 +16,20 @@ import iot.challenge.application.persistance.cassandra.Cassandra;
 import iot.challenge.application.persistance.cassandra.ConnecteurCassandra;
 import iot.challenge.application.persistance.couchbase.ConnecteurCouchBase;
 import iot.challenge.application.persistance.couchbase.CouchBase;
+import iot.challenge.application.persistance.mongo.ConfigurationMongoDb;
 import iot.challenge.application.persistance.mongo.ConnecteurMongoAvecJongo;
 import iot.challenge.application.persistance.mongo.MongoDB;
 import iot.challenge.application.persistance.sql.ConfigurationSQL;
 import iot.challenge.application.persistance.sql.ConnecteurSQL;
 import iot.challenge.application.persistance.sql.SQL;
+import org.jongo.Jongo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
@@ -64,7 +67,7 @@ public class ApplicationModule extends AbstractModule {
     private void configurerPersistance() {
 
 
-        bind(Connecteur.class).annotatedWith(SQL.class).to(ConnecteurSQL.class);
+        bind(Connecteur.class).annotatedWith(MongoDB.class).to(ConnecteurMongoAvecJongo.class);
     }
 
     private void configurerCommandes() {
@@ -86,9 +89,9 @@ public class ApplicationModule extends AbstractModule {
 
     @Provides
     @Singleton
-    public Statement sqlite(ConfigurationSQL configurationSQL) throws SQLException {
+    public Jongo jongo(ConfigurationMongoDb configurationMongoDb) throws UnknownHostException {
 
-        return configurationSQL.fabriquerStatementSQLite();
+        return configurationMongoDb.clientJongo();
     }
 
     private static Logger LOGGER = LoggerFactory.getLogger(ApplicationModule.class);

@@ -1,8 +1,12 @@
 package iot.challenge.application.requete;
 
+import info.lefoll.socle.requete.Agrégation;
 import info.lefoll.socle.requete.ManipulateurDeRequête;
 import iot.challenge.application.depot.DépôtDeMessages;
 import iot.challenge.application.modele.SynthèseGénérée;
+import iot.challenge.application.requete.mongodb.AgrégationMongoDB;
+import iot.challenge.application.requete.mongodb.ConstructeurDOpérateur;
+import iot.challenge.application.requete.mongodb.OpérateurAgrégation;
 import iot.challenge.application.requete.sql.AgrégationSQL;
 
 import javax.inject.Inject;
@@ -21,32 +25,43 @@ public class ManipulateurSynthèseParCapteur implements ManipulateurDeRequête<S
     @Override
     public List<SynthèseGénérée> exécuter(SynthèseParCapteur requête) {
 
-        AgrégationSQL agrégation = fabriquerRequêteSynthèse(requête);
+        AgrégationMongoDB agrégation = fabriquerRequêteSynthèse(requête);
 
         List<SynthèseGénérée> synthèsesParCapteur = dépôt.calculerAgrégationSynthèse(agrégation);
 
         return synthèsesParCapteur;
     }
 
-    public AgrégationSQL fabriquerRequêteSynthèse(SynthèseParCapteur requête) {
 
-        String reqêteSQL = "SELECT " +
-            "sensorType as sensorType, " +
-            "max(value) as maxValue, " +
-            "min(value) as minValue, " +
-            "round(avg(value),2) as mediumValue " +
-            "FROM 'Messages' " +
-            "WHERE strftime('%s', timestamp) BETWEEN strftime('%s', ?) AND strftime('%s', ?) " +
-            "Group by sensorType;";
+    public AgrégationMongoDB fabriquerRequêteSynthèse(SynthèseParCapteur requête) {
 
-        String dateDébut = DateTimeFormatter.ISO_INSTANT.format(requête.getDateRequête());
-        String dateFin = calculerDateFin(requête.getDateRequête(), requête.getDurée());
+        AgrégationMongoDB agrégation = new AgrégationMongoDB();
 
-        AgrégationSQL agrégation = new AgrégationSQL();
-        agrégation.ajouterRequêteSQL(reqêteSQL);
-        agrégation.ajouterValeurs(dateDébut, dateFin);
+        agrégation.setMatch(fabriquerMatch(requête));
+        agrégation.setGroup(fabriquerGroup());
 
         return agrégation;
+    }
+
+    private OpérateurAgrégation fabriquerMatch(SynthèseParCapteur requête) {
+        OpérateurAgrégation match = new ConstructeurDOpérateur()
+                .avecLeTypeEtape("$match")
+                .avecLExpressionEtape("timestamp: { $gte: #, $lt: # }")
+                .avecLesParamètres(DateTimeFormatter.ISO_INSTANT.format(requête.getDateRequête()), calculerDateFin(requête.getDateRequête(), requête.getDurée()))
+                .construire();
+
+        return match;
+    }
+    private OpérateurAgrégation fabriquerGroup() {
+        OpérateurAgrégation group = new ConstructeurDOpérateur()
+                .avecLeTypeEtape("$group")
+                .avecLExpressionEtape("_id: '$sensorType'")
+                .avecLAccumulateur(new OpérateurAgrégation.Accumulateur("minValue: {$min: '$value'},"))
+                .avecLAccumulateur(new OpérateurAgrégation.Accumulateur("maxValue: {$max: '$value'},"))
+                .avecLAccumulateur(new OpérateurAgrégation.Accumulateur("mediumValue: {$avg: '$value'}"))
+                .construire();
+
+        return group;
     }
 
     private String calculerDateFin(Instant dateRequête, int durée) {

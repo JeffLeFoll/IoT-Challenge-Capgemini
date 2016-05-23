@@ -28,78 +28,35 @@ import java.util.Optional;
 public class DépôtDeMessages implements Dépôt<MessageReçut> {
 
     @Inject
-    public DépôtDeMessages(@SQL Connecteur connecteur) {
-        this.connecteur = (ConnecteurSQL) connecteur;
+    public DépôtDeMessages(@MongoDB Connecteur connecteur) {
+        this.connecteur = (ConnecteurMongoAvecJongo) connecteur;
         connecteur.pourLEntité(MessageReçut.class);
     }
 
     @Override
     public void créer(MessageReçut donnée) {
 
-        AgrégationSQL agrégation = new AgrégationSQL();
-        agrégation.ajouterRequêteSQL(donnée.insertSQL());
-        agrégation.ajouterValeurs(donnée.getId(), donnée.getTimestamp(), donnée.getSensorType(), donnée.getValue());
-
-        connecteur.créerEntité(agrégation);
+           connecteur.créerEntité(donnée);
     }
 
     @Override
     public Optional<MessageReçut> rechercherParId(String id) {
 
-        AgrégationSQL agrégation = new AgrégationSQL();
-        agrégation.ajouterRequêteSQL("SELECT * FROM Messages where id='?';");
-        agrégation.ajouterValeurs(id);
-
-        return connecteur.avecLeProcesseur(this::construireMessageReçut).effectuerRequête(agrégation);
+        return connecteur.rechercherEntitéParId(id);
     }
 
-    public List<SynthèseGénérée> calculerAgrégationSynthèse(AgrégationSQL agrégation) {
+    public List<SynthèseGénérée> calculerAgrégationSynthèse(AgrégationMongoDB agrégation) {
 
-        Optional<List<SynthèseGénérée>> résultatAgrégation = connecteur.avecLeProcesseur(this::construireSynthèseGénérée).effectuerRequête(agrégation);
+        List<SynthèseGénérée> ensembleDeSynthèses = Lists.newArrayList();
 
-        return résultatAgrégation.orElse(Lists.newArrayList());
+        Optional<Aggregate> résultatAgrégation = connecteur.effectuerRequête(agrégation);
+
+        résultatAgrégation.ifPresent(agrégat -> agrégat.as(SynthèseGénérée.class).forEach(ensembleDeSynthèses::add));
+
+        return ensembleDeSynthèses;
     }
 
-    private Optional<MessageReçut> construireMessageReçut(ResultSet rs) {
-        try {
-            if (rs != null && rs.next()) {
-                MessageReçut messageReçut = new MessageReçut();
-                messageReçut.setId(rs.getString("id"));
-                messageReçut.setSensorType(rs.getInt("sensorType"));
-                messageReçut.setTimestamp(Instant.from(DateTimeFormatter.ISO_INSTANT.parse(rs.getString("timestamp"))));
-                messageReçut.setValue(rs.getLong("value"));
-
-                return Optional.of(messageReçut);
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Erreur lors du mapping bdd -> MessageReçut. ", e);
-        }
-        return Optional.empty();
-    }
-
-    private Optional<List<SynthèseGénérée>> construireSynthèseGénérée(ResultSet rs) {
-        try {
-            if (rs != null) {
-                List<SynthèseGénérée> synthèses = Lists.newArrayList();
-                while(rs.next()){
-                    SynthèseGénérée synthèse = new SynthèseGénérée();
-                    synthèse.setSensorType(rs.getInt("sensorType"));
-                    synthèse.setMinValue(rs.getLong("minValue"));
-                    synthèse.setMaxValue(rs.getLong("maxValue"));
-                    synthèse.setMediumValue(rs.getBigDecimal("mediumValue").setScale(2, RoundingMode.HALF_UP));
-
-                    synthèses.add(synthèse);
-                }
-
-                return Optional.of(synthèses);
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Erreur lors du mapping bdd -> SynthèseGénérée. ", e);
-        }
-        return Optional.empty();
-    }
-
-    private ConnecteurSQL connecteur;
+    private ConnecteurMongoAvecJongo connecteur;
 
     private static Logger LOGGER = LoggerFactory.getLogger(DépôtDeMessages.class);
 }
