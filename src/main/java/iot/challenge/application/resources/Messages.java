@@ -12,6 +12,7 @@ import net.codestory.http.annotations.AllowOrigin;
 import net.codestory.http.annotations.Get;
 import net.codestory.http.annotations.Post;
 import net.codestory.http.annotations.Prefix;
+import net.codestory.http.constants.Headers;
 import net.codestory.http.errors.NotFoundException;
 import net.codestory.http.payload.Payload;
 
@@ -35,7 +36,7 @@ public class Messages {
 
         busDeCommande.traiterCommande(new EnregistrerMessage(message));
 
-        return new Payload(200);
+        return Payload.created().withAllowHeaders(Headers.CONNECTION, "keep-alive");
     }
 
     @Get("/synthesis?timestamp=:heureDebut&duration=:période")
