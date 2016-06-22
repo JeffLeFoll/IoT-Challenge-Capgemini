@@ -36,7 +36,7 @@ public class Messages {
 
         busDeCommande.traiterCommande(new EnregistrerMessage(message));
 
-        return Payload.created().withAllowHeaders(Headers.CONNECTION, "keep-alive");
+        return Payload.created().withCode(200).withAllowHeaders(Headers.CONNECTION, "keep-alive");
     }
 
     @Get("/synthesis?timestamp=:heureDebut&duration=:période")
