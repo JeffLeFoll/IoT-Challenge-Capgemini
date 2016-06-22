@@ -18,7 +18,9 @@ import java.util.Optional;
 public abstract class Serveur {
 
     public void démarrer() {
-        webServer = new WebServer();
+        webServer = new WebServer()
+        .withSelectThreads(2)
+        .withThreadCount(8);
 
         webServer.configure(this::configurerServeur);
 
