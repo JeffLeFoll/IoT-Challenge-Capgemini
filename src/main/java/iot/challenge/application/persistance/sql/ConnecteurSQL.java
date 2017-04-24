@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 
+@SQL
 public class ConnecteurSQL implements Connecteur {
 
     @Inject

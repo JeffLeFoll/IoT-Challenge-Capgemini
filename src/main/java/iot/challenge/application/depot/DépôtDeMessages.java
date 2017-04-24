@@ -6,12 +6,7 @@ import info.lefoll.socle.persistance.Connecteur;
 import info.lefoll.socle.requete.Agrégation;
 import iot.challenge.application.modele.MessageReçut;
 import iot.challenge.application.modele.SynthèseGénérée;
-import iot.challenge.application.persistance.mongo.ConnecteurMongoAvecJongo;
 import iot.challenge.application.persistance.mongo.MongoDB;
-import iot.challenge.application.persistance.sql.ConnecteurSQL;
-import iot.challenge.application.persistance.sql.SQL;
-import iot.challenge.application.requete.mongodb.AgrégationMongoDB;
-import iot.challenge.application.requete.sql.AgrégationSQL;
 import org.jongo.Aggregate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,24 +24,22 @@ public class DépôtDeMessages implements Dépôt<MessageReçut> {
 
     @Inject
     public DépôtDeMessages(@MongoDB Connecteur connecteur) {
-        this.connecteur = (ConnecteurMongoAvecJongo) connecteur;
+        this.connecteur = connecteur;
         connecteur.pourLEntité(MessageReçut.class);
     }
 
     @Override
     public void créer(MessageReçut donnée) {
-
            connecteur.créerEntité(donnée);
     }
 
     @Override
     public Optional<MessageReçut> rechercherParId(String id) {
-
         return connecteur.rechercherEntitéParId(id);
     }
 
-    public List<SynthèseGénérée> calculerAgrégationSynthèse(AgrégationMongoDB agrégation) {
-
+    public List<SynthèseGénérée> calculerAgrégationSynthèse(Agrégation agrégation) {
+        
         List<SynthèseGénérée> ensembleDeSynthèses = Lists.newArrayList();
 
         Optional<Aggregate> résultatAgrégation = connecteur.effectuerRequête(agrégation);
@@ -56,7 +49,7 @@ public class DépôtDeMessages implements Dépôt<MessageReçut> {
         return ensembleDeSynthèses;
     }
 
-    private ConnecteurMongoAvecJongo connecteur;
+    private Connecteur connecteur;
 
     private static Logger LOGGER = LoggerFactory.getLogger(DépôtDeMessages.class);
 }

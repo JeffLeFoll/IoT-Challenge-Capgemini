@@ -14,6 +14,7 @@ import iot.challenge.application.requete.cassandra.AgrégationCassandra;
 import javax.inject.Inject;
 import java.util.Optional;
 
+@Cassandra
 public class ConnecteurCassandra implements Connecteur {
 
     @Inject
@@ -47,12 +48,16 @@ public class ConnecteurCassandra implements Connecteur {
     }
 
     public Optional<ResultSet> exécuterRequete(AgrégationCassandra agrégation) {
-
+        
+        assert agrégation instanceof AgrégationCassandra;
+      
         PreparedStatement preparedStatement = session.prepare(agrégation.requêteSQL());
 
         BoundStatement boundStatement = preparedStatement.bind(agrégation.valeurs());
 
         ResultSet résultat = session.execute(boundStatement);
+        
+        mapperDeDonnée().map(résultat).all();
 
         return Optional.ofNullable(résultat);
     }

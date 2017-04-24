@@ -11,6 +11,7 @@ import org.jongo.MongoCollection;
 import javax.inject.Inject;
 import java.util.Optional;
 
+@MongoDB
 public class ConnecteurMongoAvecJongo implements Connecteur {
 
     @Inject

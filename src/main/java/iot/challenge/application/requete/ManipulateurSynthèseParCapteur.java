@@ -25,7 +25,7 @@ public class ManipulateurSynthèseParCapteur implements ManipulateurDeRequête<S
     @Override
     public List<SynthèseGénérée> exécuter(SynthèseParCapteur requête) {
 
-        AgrégationMongoDB agrégation = fabriquerRequêteSynthèse(requête);
+        Agrégation agrégation = fabriquerRequêteSynthèse(requête);
 
         List<SynthèseGénérée> synthèsesParCapteur = dépôt.calculerAgrégationSynthèse(agrégation);
 
@@ -33,7 +33,7 @@ public class ManipulateurSynthèseParCapteur implements ManipulateurDeRequête<S
     }
 
 
-    public AgrégationMongoDB fabriquerRequêteSynthèse(SynthèseParCapteur requête) {
+    public Agrégation fabriquerRequêteSynthèse(SynthèseParCapteur requête) {
 
         AgrégationMongoDB agrégation = new AgrégationMongoDB();
 

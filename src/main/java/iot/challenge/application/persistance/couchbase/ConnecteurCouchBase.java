@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Optional;
 
+@CouchBase
 public class ConnecteurCouchBase implements Connecteur {
 
     @Inject

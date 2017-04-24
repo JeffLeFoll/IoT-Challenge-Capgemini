@@ -18,8 +18,7 @@ public class InjecteurGuiceDynamique {
 
         Multibinder<T> guiceMultibinder = Multibinder.newSetBinder(binder, typeABinder);
 
-        Reflections paramètresRéflections = new Reflections(ClasspathHelper.forPackage("info.lefoll.socle"),
-                ClasspathHelper.forPackage(nomDePackage));
+        Reflections paramètresRéflections = new Reflections(ClasspathHelper.forPackage(nomDePackage));
 
         Set<Class<? extends T>> ensembleDeClassesABinder = paramètresRéflections.getSubTypesOf(typeABinder);
 
